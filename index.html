@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>EdgeFamily - Bağış Yap</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { background: #111; color: white; font-family: sans-serif; text-align: center; padding: 20px; }
+    input, select, button {
+      width: 80%%; padding: 12px; margin: 10px 0; border-radius: 6px; border: none;
+    }
+    button { background: #00ccff; color: black; font-weight: bold; cursor: pointer; }
+    h1 { color: #00ccff; }
+    form { max-width: 400px; margin: auto; background: #1a1a1a; padding: 20px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>EdgeFamily</h1>
+  <p><em>Bir yetimin duası, bin hayatı aydınlatır...</em></p>
+
+  <form id="registerForm">
+    <h2>Kayıt Ol</h2>
+    <input type="text" placeholder="Ad" required />
+    <input type="text" placeholder="Soyad" required />
+    <input type="email" placeholder="E-posta" required />
+    <input type="password" placeholder="Şifre" required />
+    <input type="tel" placeholder="Telefon (örn: +90...)" required />
+    <select required>
+      <option value="">Ülke Seç</option>
+      <option value="TR">Türkiye</option>
+      <option value="US">ABD</option>
+      <option value="DE">Almanya</option>
+      <option value="FR">Fransa</option>
+      <option value="GB">İngiltere</option>
+    </select>
+    <button type="submit">Kayıt Ol</button>
+  </form>
+
+  <form id="donateForm">
+    <h2>Bağış Yap</h2>
+    <input type="number" id="amount" placeholder="Bağış Tutarı (USD)" required />
+    <button type="button">Stripe ile Öde</button>
+  </form>
+</body>
+</html>
