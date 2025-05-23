@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bağış Yap</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    body { background: #000; color: #fff; font-family: sans-serif; padding: 2rem; text-align: center; }
+    input, button { padding: 1rem; margin: 1rem auto; width: 80%%; font-size: 1rem; border-radius: 8px; }
+    button { background: #00c4ff; border: none; color: #000; font-weight: bold; cursor: pointer; }
+    h1 { color: #00c4ff; }
+  </style>
+</head>
+<body>
+  <h1>Bağış Yap</h1>
+  <p>Destek olmak istediğiniz tutarı girin:</p>
+  <input type="number" id="amount" placeholder="Tutar (USD)" min="1" />
+  <button id="pay">Stripe ile Öde</button>
+
+  <script>
+    const stripe = Stripe("pk_live_51RRLw5DfqdHd2ViaIUC5QkZg6rB3EIMZsgpzgRSbBQsekaONNhCqSEQ3lKa0U7DNJjNHY7PomzpxKKNbozhcGwkL00PCWi7E2x");
+
+    document.getElementById("pay").addEventListener("click", async () => {
+      const amount = parseInt(document.getElementById("amount").value);
+      if (!amount || amount < 1) return alert("Geçerli bir tutar girin.");
+
+      const res = await fetch("/create-payment-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: amount * 100 })
+      });
+
+      const data = await res.json();
+      const result = await stripe.confirmCardPayment(data.clientSecret, {
+        payment_method: { card: {token: 'tok_visa'} }
+      });
+
+      if (result.error) {
+        alert("Ödeme başarısız: " + result.error.message);
+      } else {
+        alert("Bağışınız için teşekkür ederiz!");
+      }
+    });
+  </script>
+</body>
+</html>
