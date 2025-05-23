@@ -1,3 +1,4 @@
+
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -18,7 +19,7 @@ app.post("/register", (req, res) => {
   if (!fullName || !email || !password) {
     return res.status(400).json({ error: "Lütfen tüm alanları doldurun." });
   }
-  if (users.find(u => u.email === email)) {
+  if (users.find((u) => u.email === email)) {
     return res.status(400).json({ error: "Email zaten kayıtlı." });
   }
   users.push({ fullName, email, password });
@@ -27,14 +28,15 @@ app.post("/register", (req, res) => {
 
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
-  const user = users.find(u => u.email === email && u.password === password);
+  const user = users.find((u) => u.email === email && u.password === password);
   if (!user) return res.status(401).json({ error: "Geçersiz bilgiler." });
   res.json({ message: "Giriş başarılı." });
 });
 
 app.post("/create-payment-intent", async (req, res) => {
   const { amount } = req.body;
-  if (!amount || amount < 100) return res.status(400).json({ error: "Geçerli tutar girin (en az 1 USD)." });
+  if (!amount || amount < 100)
+    return res.status(400).json({ error: "Geçerli tutar girin (en az 1 USD)." });
 
   try {
     const paymentIntent = await stripe.paymentIntents.create({
